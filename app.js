@@ -1,87 +1,130 @@
-// Function to add two numbers
-function add(a, b) {
-    return a + b;
-  }
-  
-  // Function to subtract one number from another
-  function subtract(a, b) {
-    return a - b;
-  }
-  
-  // Function to multiply two numbers
-  function multiply(a, b) {
-    return a * b;
-  }
-  
-  // Function to divide one number by another
-  function divide(a, b) {
-    if (b === 0) {
-      return "Error: Division by zero";
-    }
-    return a / b;
-  }
-  
-  // Testing in browser console
-  console.log(add(5, 3));
-  console.log(subtract(5, 3));
-  console.log(multiply(5, 3));
-  console.log(divide(5, 3));
-  console.log(divide(5, 0));
-  
+// Variables to store the current state of the calculator
+let displayValue = ''; // Current value displayed
+let firstNumber = null; // First operand
+let secondNumber = null; // Second operand
+let currentOperator = null; // Selected operator
+let shouldResetDisplay = false; // Flag to reset display after an operation
 
-  // Variables for the calculator operation
-let firstNumber = 3;    // Example: the first number
-let operator = '+';     // Example: the operator
-let secondNumber = 5;   // Example: the second number
-
-// Function to perform an operation based on the operator
-function operate(operator, num1, num2) {
-    switch (operator) {
-      case '+':
-        return add(num1, num2);
-      case '-':
-        return subtract(num1, num2);
-      case '*':
-        return multiply(num1, num2);
-      case '/':
-        return divide(num1, num2);
-      default:
-        return "Invalid operator";
-    }
-  }
-
-// Output test
-console.log(operate(operator, firstNumber, secondNumber));  // 8 in this case (3 + 5)
-
-// Variable to store the display value
-let displayValue = '';
-
-// Function to update the display
+// Function to update the display based on displayValue
 function updateDisplay() {
   const display = document.querySelector('.display p');
-  display.textContent = displayValue;
+  display.textContent = displayValue || '0'; // Show '0' if displayValue is empty
 }
 
 // Function to handle number button clicks
 function handleNumberClick(number) {
-  displayValue += number;  // Append the clicked number to displayValue
-  updateDisplay();  // Update the display with the new value
+  if (shouldResetDisplay) {
+    // Reset the display after an operation or operator is selected
+    displayValue = '';
+    shouldResetDisplay = false;
+  }
+  displayValue += number; // Append the clicked number to the display value
+  updateDisplay(); // Refresh the display
 }
 
-// Adding event listeners to number buttons
+// Function to handle operator button clicks
+function handleOperatorClick(operator) {
+  if (firstNumber === null) {
+    // If no first number is stored, store the current display value as the first number
+    firstNumber = parseFloat(displayValue);
+  } else if (currentOperator) {
+    // If an operator already exists, perform the operation before storing the next operator
+    secondNumber = parseFloat(displayValue);
+    firstNumber = operate(currentOperator, firstNumber, secondNumber); // Calculate the result
+    displayValue = String(firstNumber); // Update display with the result
+    updateDisplay(); // Refresh the display
+  }
+
+  currentOperator = operator; // Store the selected operator
+  shouldResetDisplay = true; // Prepare to reset display for the next input
+}
+
+// Function to handle "=" button clicks (perform the operation)
+function handleEqualsClick() {
+  if (currentOperator !== null && firstNumber !== null) {
+    // If both operator and first number are set, perform the operation
+    secondNumber = parseFloat(displayValue); // Store second number
+    const result = operate(currentOperator, firstNumber, secondNumber); // Perform the operation
+    displayValue = String(result); // Update the display with the result
+    updateDisplay(); // Refresh the display
+
+    // Reset everything after the calculation
+    firstNumber = null;
+    secondNumber = null;
+    currentOperator = null;
+  }
+}
+
+// Function to clear the calculator (reset everything)
+function clearCalculator() {
+  displayValue = '';
+  firstNumber = null;
+  secondNumber = null;
+  currentOperator = null;
+  updateDisplay(); // Refresh the display to show '0'
+}
+
+// Function to perform basic arithmetic operations
+function operate(operator, num1, num2) {
+  switch (operator) {
+    case '+':
+      return add(num1, num2);
+    case '-':
+      return subtract(num1, num2);
+    case '*':
+      return multiply(num1, num2);
+    case '/':
+      if (num2 === 0) return 'Error'; // Handle division by zero
+      return divide(num1, num2);
+    default:
+      return null;
+  }
+}
+
+// Functions for basic arithmetic operations
+function add(a, b) {
+  return a + b;
+}
+
+function subtract(a, b) {
+  return a - b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
+
+function divide(a, b) {
+  return a / b;
+}
+
+// Function to initialize event listeners for the calculator buttons
 function init() {
-  const numberButtons = document.querySelectorAll('.btn');  // Select all buttons
+  const numberButtons = document.querySelectorAll('.btn'); // Select all buttons
   numberButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-      const value = e.target.textContent;  // Get the button's value (text)
-      
-      // Only handle number buttons (0-9) for now
-      if (!isNaN(value)) {
-        handleNumberClick(value);
-      }
-    });
+    const value = button.textContent; // Get button text (number or operator)
+
+    // Add event listeners for number buttons (0-9)
+    if (!isNaN(value)) {
+      button.addEventListener('click', () => handleNumberClick(value));
+    }
+
+    // Add event listeners for operator buttons (+, -, *, /)
+    if (['+', '-', '*', '/'].includes(value)) {
+      button.addEventListener('click', () => handleOperatorClick(value));
+    }
+
+    // Add event listener for "=" button
+    if (value === '=') {
+      button.addEventListener('click', handleEqualsClick);
+    }
+
+    // Add event listener for "C" (clear) button
+    if (value === 'C') {
+      button.addEventListener('click', clearCalculator);
+    }
   });
 }
 
-// Initialize the event listeners when the DOM is loaded
+// Run the init function when the window loads
 window.onload = init;

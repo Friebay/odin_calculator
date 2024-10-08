@@ -1,49 +1,68 @@
-body {
+/* Basic reset for margins and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Ensure the calculator takes up the full viewport height */
+  html, body {
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    font-family: Arial, sans-serif;
+    font-family: sans-serif;
   }
   
+  /* Basic container styling for the calculator */
   .calculator {
-    width: 200px;
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
+  /* Simple styling for the display */
   .display {
-    width: 100%;
-    height: 50px;
-    background-color: #333;
-    color: white;
-    text-align: right;
-    font-size: 2em;
-    padding: 10px;
-    box-sizing: border-box;
+    width: 160px;
+    height: 40px;
+    border: 1px solid #000;
     margin-bottom: 10px;
     display: flex;
-    align-items: center;
     justify-content: flex-end;
+    align-items: center;
+    padding-right: 10px;
   }
   
+  .display p {
+    font-size: 1.5em;
+    word-wrap: break-word;
+  }
+  
+  /* Basic layout for buttons */
   .buttons {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(4, 40px); /* 4 buttons per row */
+    gap: 5px; /* Small gap between buttons */
   }
   
-  .btn {
-    background-color: #ddd;
-    border: none;
+  /* Basic styling for each button */
+  button.btn {
+    width: 40px;
     height: 40px;
-    font-size: 1.2em;
+    border: 1px solid #000;
+    font-size: 1em;
     cursor: pointer;
+    background-color: #f0f0f0;
   }
   
-  .btn:hover {
-    background-color: #bbb;
+  /* Remove button default styles */
+  button {
+    outline: none;
+    border: none;
+    padding: 0;
+  }
+  
+  button:active {
+    background-color: #ddd; /* Basic feedback for when a button is clicked */
   }
   
