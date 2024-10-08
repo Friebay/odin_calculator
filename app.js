@@ -52,3 +52,36 @@ function operate(operator, num1, num2) {
 
 // Output test
 console.log(operate(operator, firstNumber, secondNumber));  // 8 in this case (3 + 5)
+
+// Variable to store the display value
+let displayValue = '';
+
+// Function to update the display
+function updateDisplay() {
+  const display = document.querySelector('.display p');
+  display.textContent = displayValue;
+}
+
+// Function to handle number button clicks
+function handleNumberClick(number) {
+  displayValue += number;  // Append the clicked number to displayValue
+  updateDisplay();  // Update the display with the new value
+}
+
+// Adding event listeners to number buttons
+function init() {
+  const numberButtons = document.querySelectorAll('.btn');  // Select all buttons
+  numberButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      const value = e.target.textContent;  // Get the button's value (text)
+      
+      // Only handle number buttons (0-9) for now
+      if (!isNaN(value)) {
+        handleNumberClick(value);
+      }
+    });
+  });
+}
+
+// Initialize the event listeners when the DOM is loaded
+window.onload = init;
