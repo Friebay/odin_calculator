@@ -34,21 +34,21 @@ let firstNumber = 3;    // Example: the first number
 let operator = '+';     // Example: the operator
 let secondNumber = 5;   // Example: the second number
 
-// Testing the operation with a simple calculation
-function calculate(firstNumber, operator, secondNumber) {
-  switch (operator) {
-    case '+':
-      return add(firstNumber, secondNumber);
-    case '-':
-      return subtract(firstNumber, secondNumber);
-    case '*':
-      return multiply(firstNumber, secondNumber);
-    case '/':
-      return divide(firstNumber, secondNumber);
-    default:
-      return "Invalid operator";
+// Function to perform an operation based on the operator
+function operate(operator, num1, num2) {
+    switch (operator) {
+      case '+':
+        return add(num1, num2);
+      case '-':
+        return subtract(num1, num2);
+      case '*':
+        return multiply(num1, num2);
+      case '/':
+        return divide(num1, num2);
+      default:
+        return "Invalid operator";
+    }
   }
-}
 
 // Output test
-console.log(calculate(firstNumber, operator, secondNumber));  // 8 in this case (3 + 5)
+console.log(operate(operator, firstNumber, secondNumber));  // 8 in this case (3 + 5)
