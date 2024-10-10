@@ -1,25 +1,21 @@
-// Variables to store the current state of the calculator
-let displayValue = ''; // Current value displayed
-let firstNumber = null; // First operand
-let secondNumber = null; // Second operand
-let currentOperator = null; // Selected operator
-let shouldResetDisplay = false; // Flag to reset display after an operation
+let displayValue = '';
+let firstNumber = null;
+let secondNumber = null;
+let currentOperator = null;
+let shouldResetDisplay = false;
 
-// Function to update the display based on displayValue
 function updateDisplay() {
   const display = document.querySelector('.display p');
-  display.textContent = displayValue || '0'; // Show '0' if displayValue is empty
+  display.textContent = displayValue || '0';
 }
 
-// Function to handle number button clicks
 function handleNumberClick(number) {
   if (shouldResetDisplay) {
-    // Reset the display after an operation or operator is selected
     displayValue = '';
     shouldResetDisplay = false;
   }
-  displayValue += number; // Append the clicked number to the display value
-  updateDisplay(); // Refresh the display
+  displayValue += number;
+  updateDisplay();
 }
 
 // Function to handle operator button clicks
@@ -126,5 +122,4 @@ function init() {
   });
 }
 
-// Run the init function when the window loads
 window.onload = init;

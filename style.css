@@ -1,11 +1,9 @@
-/* Basic reset for margins and padding */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
   
-  /* Ensure the calculator takes up the full viewport height */
   html, body {
     height: 100%;
     display: flex;
@@ -14,14 +12,12 @@
     font-family: sans-serif;
   }
   
-  /* Basic container styling for the calculator */
   .calculator {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
   
-  /* Simple styling for the display */
   .display {
     width: 160px;
     height: 40px;
@@ -38,14 +34,12 @@
     word-wrap: break-word;
   }
   
-  /* Basic layout for buttons */
   .buttons {
     display: grid;
-    grid-template-columns: repeat(4, 40px); /* 4 buttons per row */
-    gap: 5px; /* Small gap between buttons */
+    grid-template-columns: repeat(4, 40px);
+    gap: 5px;
   }
   
-  /* Basic styling for each button */
   button.btn {
     width: 40px;
     height: 40px;
@@ -55,7 +49,6 @@
     background-color: #f0f0f0;
   }
   
-  /* Remove button default styles */
   button {
     outline: none;
     border: none;
@@ -63,6 +56,6 @@
   }
   
   button:active {
-    background-color: #ddd; /* Basic feedback for when a button is clicked */
+    background-color: #ddd;
   }
   
